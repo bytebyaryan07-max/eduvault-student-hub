@@ -1,0 +1,88 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Represents a student or teacher user profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "teacher", "admin"] },
+        "college": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "displayName", "email", "role"]
+    },
+    "Resource": {
+      "title": "Resource",
+      "description": "An educational study material document, note, or paper",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "fileType": { "type": "string" },
+        "fileUrl": { "type": "string" },
+        "category": { "type": "string" },
+        "subject": { "type": "string" },
+        "course": { "type": "string" },
+        "college": { "type": "string" },
+        "year": { "type": "string" },
+        "uploadedBy": { "type": "string" },
+        "uploadedByName": { "type": "string" },
+        "uploadedAt": { "type": "string" },
+        "downloadCount": { "type": "number" },
+        "likesCount": { "type": "number" },
+        "content": { "type": "string" },
+        "isApproved": { "type": "boolean" }
+      },
+      "required": ["id", "title", "category", "subject", "course", "uploadedBy", "uploadedByName", "uploadedAt"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "A user comment or review on an educational resource",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "resourceId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "rating": { "type": "number" }
+      },
+      "required": ["id", "resourceId", "userId", "userName", "text", "createdAt"]
+    },
+    "Bookmark": {
+      "title": "Bookmark",
+      "description": "A bookmarked resource linked to a specific user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "resourceId": { "type": "string" },
+        "userId": { "type": "string" },
+        "addedAt": { "type": "string" }
+      },
+      "required": ["id", "resourceId", "userId", "addedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "The user profile document"
+    },
+    "/resources/{resourceId}": {
+      "schema": "Resource",
+      "description": "The resource metadata document"
+    },
+    "/resources/{resourceId}/comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Comments left on a study material resource"
+    },
+    "/users/{userId}/bookmarks/{bookmarkId}": {
+      "schema": "Bookmark",
+      "description": "Bookmarks for a user"
+    }
+  }
+}
